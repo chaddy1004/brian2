@@ -41,8 +41,8 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
     {% if iterator_func=='sample' %}
     {% if iterator_kwds['sample_size'] == 'fixed' %}
     cdef set _selected_set = set()
-    cdef _numpy.ndarray _candidates
     cdef _numpy.ndarray _selected
+    cdef int _n_total
     cdef int _element
     cdef int _r
     {% else %}
@@ -73,17 +73,20 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
         {% if iterator_kwds['sample_size'] == 'fixed' %}
         # Tracking sampling technique
         _selected_set.clear()
-        _candidates = _numpy.arange(_iter_low, _iter_high, _iter_step)
+        if _iter_step > 0:
+            _n_total = (_iter_high - _iter_low - 1) // _iter_step + 1
+        else:
+            _n_total = (_iter_low - _iter_high - 1) // -_iter_step + 1
         for _element in range(_iter_size):
-            _r = _rand(_vectorisation_idx) * _candidates.size
+            _r = <int>(_rand(_vectorisation_idx) * _n_total)
             while _r in _selected_set:
-                _r = _rand(_vectorisation_idx) * _candidates.size
+                _r = <int>(_rand(_vectorisation_idx) * _n_total)
             _selected_set.add(_r)
         _selected = _numpy.empty(_iter_size, dtype=_numpy.int32)
         for _r, _element in enumerate(_selected_set):
             _selected[_r] = _element
         for _element in _selected:
-            {{iteration_variable}} = _candidates[_element]
+            {{iteration_variable}} = _iter_low + _iter_step * _element
         {% else %}
         if _iter_p==0:
             continue

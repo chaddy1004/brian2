@@ -84,13 +84,6 @@
             _n_total = (_uiter_high - _uiter_low - 1) / _uiter_step + 1;
         else
             _n_total = (_uiter_low - _uiter_high - 1) / -_uiter_step + 1;
-        _element = 0;
-        int *_candidates = (int *)malloc(_n_total*sizeof(int));
-        for(long _value=_uiter_low; _value<_uiter_high; _value+=_uiter_step)
-        {
-            _candidates[_element] = _value;
-            _element++;
-        }
 
         for (_element=0; _element<_uiter_size; _element++)
         {
@@ -109,7 +102,7 @@
         std::sort(_selected, _selected + _uiter_size);
         for (int _element=0; _element < _uiter_size; _element++)
         {
-            long {{iteration_variable}} = _candidates[_selected[_element]];
+            long {{iteration_variable}} = _uiter_low + _uiter_step*_selected[_element];
 
         {% else %}
         if(_uiter_p==0) continue;
@@ -190,7 +183,6 @@
 		}
 		{% if iterator_func == 'sample' and iterator_kwds['sample_size'] == 'fixed' %}
 		free(_selected);
-		free(_candidates);
 		{% endif %}
 	}
 
