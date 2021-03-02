@@ -76,6 +76,8 @@
         {% if iterator_kwds['sample_size'] == 'fixed' %}
         // Selection sampling technique
         // See section 3.4.2 of Donald E. Knuth, AOCP, Vol 2, Seminumerical Algorithms
+        if (_uiter_size == 0)
+            continue;
         int _n_selected = 0;
         int _n_dealt_with = 0;
         int _n_total;

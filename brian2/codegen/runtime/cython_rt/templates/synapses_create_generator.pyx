@@ -70,6 +70,8 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
         for {{iteration_variable}} in range(_iter_low, _iter_high, _iter_step):
         {% elif iterator_func=='sample' %}
         {% if iterator_kwds['sample_size'] == 'fixed' %}
+        if _iter_size == 0:
+            continue
         # Selection sampling technique
         # See section 3.4.2 of Donald E. Knuth, AOCP, Vol 2, Seminumerical Algorithms
         _n_selected = 0
