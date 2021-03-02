@@ -90,7 +90,7 @@
         for (_element=0; _element<_uiter_size; _element++)
         {
             _r = _rand(_vectorisation_idx) * _n_total;
-            while (_selected_set.find(_r) != _selected_set.end())
+            while (!_selected_set.insert(_r).second)
                 _r = _rand(_vectorisation_idx) * _n_total;
             _selected_set.insert(_r);
         }
