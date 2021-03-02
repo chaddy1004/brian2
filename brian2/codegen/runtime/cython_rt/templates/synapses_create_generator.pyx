@@ -70,6 +70,8 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
         for {{iteration_variable}} in range(_iter_low, _iter_high, _iter_step):
         {% elif iterator_func=='sample' %}
         {% if iterator_kwds['sample_size'] == 'fixed' %}
+        if _iter_size == 0:
+            continue
         # Tracking sampling technique
         _selected_set.clear()
         if _iter_step > 0:

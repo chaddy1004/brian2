@@ -74,6 +74,8 @@
         {
         {% elif iterator_func=='sample' %}
         {% if iterator_kwds['sample_size'] == 'fixed' %}
+        if (_uiter_size == 0)
+            continue;
         // Tracking sampling technique
         std::set<int> _selected_set;
         int _element;
