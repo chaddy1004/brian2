@@ -95,7 +95,7 @@
         }
         for (std::set<int>::iterator _it=_selected_set.begin(); _it != _selected_set.end(); ++_it)
         {
-            long {{iteration_variable}} = _uiter_low + _uiter_step*(*it);
+            long {{iteration_variable}} = _uiter_low + _uiter_step*(*_it);
 
         {% else %}
         if(_uiter_p==0) continue;
