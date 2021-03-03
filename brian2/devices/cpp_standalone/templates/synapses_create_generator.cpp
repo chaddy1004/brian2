@@ -174,9 +174,6 @@
                 {{_dynamic__synaptic_post}}.push_back(_post_idx);
 			}
 		}
-		{% if iterator_func == 'sample' and iterator_kwds['sample_size'] == 'fixed' %}
-		free(_selected);
-		{% endif %}
 	}
 
 	// now we need to resize all registered variables
