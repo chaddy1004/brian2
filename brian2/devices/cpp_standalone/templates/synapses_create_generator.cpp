@@ -81,7 +81,6 @@
         int _element;
         int _n_total;
         int _r;
-        int *_selected;
         if (_uiter_step > 0)
             _n_total = (_uiter_high - _uiter_low - 1) / _uiter_step + 1;
         else
@@ -94,17 +93,9 @@
                 _r = _rand(_vectorisation_idx) * _n_total;
             _selected_set.insert(_r);
         }
-        _selected = (int *)malloc(_uiter_size*sizeof(int));
-        _element = 0;
         for (std::set<int>::iterator _it=_selected_set.begin(); _it != _selected_set.end(); ++_it)
         {
-            _selected[_element] = *_it;
-            _element++;
-        }
-        std::sort(_selected, _selected + _uiter_size);
-        for (int _element=0; _element < _uiter_size; _element++)
-        {
-            long {{iteration_variable}} = _uiter_low + _uiter_step*_selected[_element];
+            long {{iteration_variable}} = _uiter_low + _uiter_step*(*it);
 
         {% else %}
         if(_uiter_p==0) continue;

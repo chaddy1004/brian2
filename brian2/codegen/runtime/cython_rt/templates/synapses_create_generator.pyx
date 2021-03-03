@@ -41,7 +41,6 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
     {% if iterator_func=='sample' %}
     {% if iterator_kwds['sample_size'] == 'fixed' %}
     cdef set _selected_set = set()
-    cdef _numpy.ndarray _selected
     cdef int _n_total
     cdef int _element
     cdef int _r
@@ -84,11 +83,7 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
             while _r in _selected_set:
                 _r = <int>(_rand(_vectorisation_idx) * _n_total)
             _selected_set.add(_r)
-        _selected = _numpy.empty(_iter_size, dtype=_numpy.int32)
-        for _r, _element in enumerate(_selected_set):
-            _selected[_r] = _element
-        _selected.sort()
-        for _element in _selected:
+        for _element in _selected_set:
             {{iteration_variable}} = _iter_low + _iter_step * _element
         {% else %}
         if _iter_p==0:
