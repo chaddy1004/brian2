@@ -87,6 +87,7 @@ cdef void _flush_buffer(buf, dynarr, int buf_len):
         _selected = _numpy.empty(_iter_size, dtype=_numpy.int32)
         for _r, _element in enumerate(_selected_set):
             _selected[_r] = _element
+        _selected.sort()
         for _element in _selected:
             {{iteration_variable}} = _iter_low + _iter_step * _element
         {% else %}
